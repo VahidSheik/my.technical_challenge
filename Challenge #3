@@ -1,0 +1,22 @@
+function Get-NestedObjectValue {
+  param (
+    $object,
+    $key
+  )
+
+  # Check if the key exists in the object
+  if ($object.ContainsKey($key)) {
+    # Get the value of the key
+    $value = $object[$key]
+
+    # If the value is an object, recursively call the function to get the value of the key from the nested object
+    if ($value -is [object]) {
+      $value = Get-NestedObjectValue $value $key
+    }
+
+    return $value
+  }
+
+  # Return null if the key does not exist
+  return $null
+}
